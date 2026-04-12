@@ -1,21 +1,57 @@
 /// <reference types="cypress" />
 
-describe('template spec', () => {
-  const url = 'https://desafio-feng-qa-ab3c59.gitlab.io/'
+import LoginPage from '../pages/LoginPage'
 
-  beforeEach(() => {
-    cy.visit(url)
-  })
+describe('Login', () => {
 
   const user = {
-    email : 'admin@festival.com ',
-    password : '123456'
+    valido: {
+      email: 'admin@festival.com',
+      senha: '123456'
+    },
+    invalido: {
+      email_invalido: 'invalid-email',
+      email: 'invalid@email.com',
+      senha: '1234567'
+    }
   }
 
   it('Deve realizar login com sucesso', () => {
-      cy.get('#email').type(user.email)
-      cy.get('#password').type(user.password)
-      cy.get('#login-submit').click()
-      cy.get('.header__user-name').should('be.visible')
+    LoginPage.login(user.valido.email, user.valido.senha)
+    LoginPage.validarSucesso()
   })
+
+  it('Não deve logar com email inválido', () => {
+    LoginPage.login(user.invalido.email, user.valido.senha)
+    LoginPage.validarErro()
+  })
+
+  it('Não deve logar com senha inválida', () => {
+    LoginPage.login(user.valido.email, user.invalido.senha)
+    LoginPage.validarErro()
+  })
+
+  it('Não deve logar com email e senha inválidos', () => {
+    LoginPage.login(user.invalido.email, user.invalido.senha)
+    LoginPage.validarErro()
+  })
+
+  it.only('Não deve logar com email em formato inválido', () => {
+    LoginPage.acessar()
+
+    LoginPage.preencherEmail('email-invalido')
+    LoginPage.preencherSenha('123456')
+
+    LoginPage.submeter()
+
+    // 🔍 valida que o campo está inválido (HTML5)
+    cy.get('#email:invalid').should('exist')
+
+    cy.get('#email')
+      .then($input => {
+        expect($input[0].validationMessage).to.not.be.empty
+      })
+
+  })
+
 })
