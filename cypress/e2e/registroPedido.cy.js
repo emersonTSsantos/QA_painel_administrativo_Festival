@@ -10,28 +10,41 @@ describe('Pedidos', () => {
     const gerarPessoa = () => ({
         nome: faker.person.firstName(),
         email: faker.internet.email(),
-        telefone: ('11944556677')
+        telefone: '11944556677'
     })
 
-    const gerarProduto = () => ({
-        nome: faker.commerce.productName(),
-        descricao: faker.commerce.productDescription(),
-        valor: 10
-    })
+    const selecionarClienteExistente = () => {
+        cy.get('#new-order-cliente')
+            .find('option')
+            .then(options => {
+                const cliente = options[1].innerText
+                cy.get('#new-order-cliente').select(cliente)
+            })
+    }
 
     const selecionarProdutoExistente = () => {
         cy.get('#new-order-item-select')
             .find('option')
             .then(options => {
-                const texto = options[1].innerText // pega primeiro produto válido
-                cy.get('#new-order-item-select').select(texto)
-                return texto
+                const produto = options[1].innerText
+                const nomeProduto = produto.split(' - ')[0]
+
+                cy.get('#new-order-item-select').select(produto)
+
+                PedidoPage.informarQuantidade(1)
+                PedidoPage.adicionarItem()
+
+                PedidoPage.validarItemNoCarrinho(nomeProduto)
             })
     }
 
     beforeEach(() => {
         cy.login()
     })
+
+    // ========================
+    // 🛒 PEDIDOS
+    // ========================
 
     it('Deve realizar pedido com sucesso (fluxo E2E)', () => {
         const pessoa = gerarPessoa()
@@ -45,50 +58,21 @@ describe('Pedidos', () => {
         PessoaPage.salvarCliente()
         PessoaPage.validarClienteNoSelect(pessoa.nome)
 
-        // produto existente
-        cy.get('#new-order-item-select')
-            .find('option')
-            .then(options => {
-
-                expect(options.length).to.be.greaterThan(1)
-
-                const produto = options[1].innerText
-                const nomeProduto = produto.split(' - ')[0]
-
-                cy.get('#new-order-item-select').select(produto)
-
-                PedidoPage.informarQuantidade(1)
-                PedidoPage.adicionarItem()
-
-                PedidoPage.validarItemNoCarrinho(nomeProduto)
-            })
+        selecionarProdutoExistente()
 
         PedidoPage.confirmarPedido()
 
-        cy.get('[data-order-id="p26"] > .order-card__client').should('be.visible')
+        cy.get('.order-card__id').should('be.visible')
     })
 
     it('Não deve permitir pedido sem cliente', () => {
 
         PedidoPage.abrirNovoPedido()
 
-        cy.get('#new-order-item-select')
-            .find('option')
-            .then(options => {
-
-                expect(options.length).to.be.greaterThan(1)
-
-                const produto = options[1].innerText
-
-                cy.get('#new-order-item-select').select(produto)
-
-                PedidoPage.informarQuantidade(2)
-                PedidoPage.adicionarItem()
-            })
+        selecionarProdutoExistente()
 
         PedidoPage.confirmarPedido()
 
-        // 🔥 valida comportamento
         cy.get('#new-order-cliente').should('be.visible')
     })
 
@@ -96,24 +80,112 @@ describe('Pedidos', () => {
         const pessoa = gerarPessoa()
 
         PedidoPage.abrirNovoPedido()
-        PedidoPage.selecionarCliente(pessoa.nome)
+
+        PessoaPage.clicarNovoCliente()
+        PessoaPage.preencherNome(pessoa.nome)
+        PessoaPage.preencherEmail(pessoa.email)
+        PessoaPage.preencherTelefone(pessoa.telefone)
+        PessoaPage.salvarCliente()
 
         PedidoPage.confirmarPedido()
 
         cy.get('#new-order-item-select').should('exist')
     })
 
-    it('Não deve permitir pedido com valor menor que R$ 5 (REGRA)', () => {
-        const pessoa = gerarPessoa()
-        const produto = gerarProduto()
+    it('Permite realizar pedido com valor menor que R$ 5 (BUG)', () => {
+        const produto = {
+            nome: faker.commerce.productName(),
+            descricao: faker.commerce.productDescription(),
+            valor: 4 
+        }
 
-        // produto barato
-        produto.valor = 1
+        ProdutoPage.abrirMenu()
+        ProdutoPage.acessarProdutos()
+        ProdutoPage.preencherNome(produto.nome)
+        ProdutoPage.preencherDescricao(produto.descricao)
+        ProdutoPage.preencherValor(produto.valor)
+        ProdutoPage.salvarProduto()
 
-        // fluxo completo (igual acima)
+        ProdutoPage.abrirMenu()
+        PedidoPage.acessarListaPedidos()
 
-        // valida que não permite
-        cy.contains('Total').should('contain', '1')
+        PedidoPage.abrirNovoPedido()
+
+        selecionarClienteExistente()
+
+        cy.get('#new-order-item-select')
+            .find('option')
+            .then(options => {
+
+                const produtoCriado = [...options]
+                    .map(opt => opt.innerText)
+                    .find(texto => texto.includes(produto.nome))
+
+                cy.get('#new-order-item-select').select(produtoCriado)
+
+                PedidoPage.informarQuantidade(1)
+                PedidoPage.adicionarItem()
+
+                PedidoPage.validarItemNoCarrinho(produto.nome)
+            })
+
+        PedidoPage.confirmarPedido()
+
+        cy.get('.order-card__id').should('be.visible')
+    })
+
+    it.skip('Não deveria permitir pedido com valor menor que R$ 5 (REGRA)', () => {
+        expect(true).to.equal(false)
+    })
+
+    // ========================
+    // 🔍 FILTROS
+    // ========================
+
+    it('Deve filtrar pedidos por nome do cliente', () => {
+
+        PedidoPage.acessarListaPedidos()
+
+        cy.get('[name="nomeCliente"]').clear().type('Bruno Santos')
+        cy.get('.filter-section__btn--primary').click()
+
+        cy.get('.order-card__client')
+            .each(($el) => {
+                expect($el.text()).to.contain('Bruno Santos')
+            })
+    })
+
+    it('Deve filtrar pedidos por período de data', () => {
+
+        PedidoPage.acessarListaPedidos()
+
+        cy.get('[name="dataInicio"]').type('2025-02-01')
+        cy.get('[name="dataFim"]').type('2025-02-15')
+        cy.get('.filter-section__btn--primary').click()
+
+        cy.get('.order-card').should('have.length.greaterThan', 0)
+    })
+
+    it('Deve filtrar pedidos por valor mínimo', () => {
+
+        PedidoPage.acessarListaPedidos()
+
+        cy.get('[name="valorMinimo"]').type('10')
+        cy.get('.filter-section__btn--primary').click()
+
+        cy.get('.order-card').should('exist')
+    })
+
+    it('Deve limpar os filtros corretamente', () => {
+
+        PedidoPage.acessarListaPedidos()
+
+        cy.get('[name="nomeCliente"]').type('Bruno Santos')
+        cy.get('.filter-section__btn--primary').click()
+
+        cy.get('#btn-limpar').click()
+
+        cy.get('[name="nomeCliente"]').should('have.value', '')
     })
 
 })

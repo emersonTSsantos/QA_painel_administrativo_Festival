@@ -1,5 +1,9 @@
 class PedidoPage {
 
+    acessarListaPedidos() {
+        cy.get('[data-tab="pedidos"]').click()
+    }
+
     abrirNovoPedido() {
         cy.get('#btn-novo-pedido').click()
     }
