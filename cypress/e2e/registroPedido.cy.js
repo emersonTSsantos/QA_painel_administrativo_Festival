@@ -33,12 +33,11 @@ describe('Pedidos', () => {
         cy.login()
     })
 
-    it.only('Deve realizar pedido com sucesso (fluxo E2E)', () => {
+    it('Deve realizar pedido com sucesso (fluxo E2E)', () => {
         const pessoa = gerarPessoa()
 
         PedidoPage.abrirNovoPedido()
 
-        // criar cliente
         PessoaPage.clicarNovoCliente()
         PessoaPage.preencherNome(pessoa.nome)
         PessoaPage.preencherEmail(pessoa.email)
@@ -66,20 +65,31 @@ describe('Pedidos', () => {
 
         PedidoPage.confirmarPedido()
 
-        cy.get('.order-card__id').should('be.visible')
+        cy.get('[data-order-id="p26"] > .order-card__client').should('be.visible')
     })
+
     it('Não deve permitir pedido sem cliente', () => {
-        const produto = gerarProduto()
 
         PedidoPage.abrirNovoPedido()
-        PedidoPage.selecionarProduto(produto.nome)
-        PedidoPage.informarQuantidade(1)
-        PedidoPage.adicionarItem()
+
+        cy.get('#new-order-item-select')
+            .find('option')
+            .then(options => {
+
+                expect(options.length).to.be.greaterThan(1)
+
+                const produto = options[1].innerText
+
+                cy.get('#new-order-item-select').select(produto)
+
+                PedidoPage.informarQuantidade(2)
+                PedidoPage.adicionarItem()
+            })
 
         PedidoPage.confirmarPedido()
 
-        // valida que não fechou ou não registrou
-        cy.get('#new-order-cliente').should('exist')
+        // 🔥 valida comportamento
+        cy.get('#new-order-cliente').should('be.visible')
     })
 
     it('Não deve permitir pedido sem produto', () => {
