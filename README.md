@@ -2,13 +2,13 @@
 
 Projeto de automação de testes end-to-end utilizando Cypress, desenvolvido para validar as principais funcionalidades de um painel administrativo de gerenciamento de pedidos, clientes e produtos.
 
-# 🔗 Repositório:
+## 🔗 Repositório:
 
 https://github.com/emersonTSsantos/QA_painel_administrativo_Festival
 
 ---
 
-# 🎯 Objetivo
+## 🎯 Objetivo
 
 Garantir a qualidade da aplicação através de testes automatizados, cobrindo:
 
@@ -20,18 +20,18 @@ Garantir a qualidade da aplicação através de testes automatizados, cobrindo:
 
 ---
 
-# 🛠️ Tecnologias utilizadas
+## 🛠️ Tecnologias utilizadas
 
-Cypress → Automação E2E
-JavaScript → Linguagem principal
-Faker → Geração de dados dinâmicos
-Page Object Model (POM) → Organização e reutilização de código
+- Cypress → Automação E2E
+- JavaScript → Linguagem principal
+- Faker → Geração de dados dinâmicos
+- Page Object Model (POM) → Organização e reutilização de código
 
 ---
 
-# 📂 Arquitetura do Projeto
+## 📂 Arquitetura do Projeto
 
-# Estrutura
+## Estrutura
 
 - **e2e/** → Contém os testes automatizados organizados por funcionalidade  
 
@@ -41,9 +41,9 @@ Page Object Model (POM) → Organização e reutilização de código
 
 ---
 
-# 🧠 Estratégia de Testes
+## 🧠 Estratégia de Testes
 
-# ✔️ Page Object Model (POM)
+## ✔️ Page Object Model (POM)
 
 Separação clara entre:
 
@@ -79,9 +79,9 @@ Os testes seguem o padrão:
 - Comunicação com o time
 - Clareza dos cenários
 
---- 
-
 ✔️ Cobertura de regras de negócio
+
+--- 
 
 # Além do fluxo funcional, foram testadas regras críticas como:
 
@@ -89,16 +89,15 @@ Os testes seguem o padrão:
 - Campos obrigatórios
 - Integridade de cadastro
 
-✅ Cenários automatizados
+---
 
-# 🔐 Login
+## ✅ Cenários automatizados
+
+## 🔐 Login
     - Login com sucesso
     - Login inválido (email/senha)
     - Validação de formato de email
-
-    ---
-
-# 👤 Cadastro de Pessoas
+## 👤 Cadastro de Pessoas
     - Cadastro com sucesso
     - Validação de campos obrigatórios
     - ❌ BUG: sistema permite cadastro sem telefone
@@ -140,15 +139,17 @@ Os testes seguem o padrão:
 
 # 🚀 Como rodar o projeto
 
-# Instalar dependências
+## Instalar dependências
 - npm install
 
-# Abrir o Cypress
+## Abrir o Cypress
 - npx cypress open
+
+---
 
 ## 📈 Possíveis melhorias
 
-# 🔧 Funcionais
+## 🔧 Funcionais
 
 - Remover ou corrigir campo de busca no modal
 - Adicionar funcionalidade de remover cliente
@@ -156,21 +157,21 @@ Os testes seguem o padrão:
 - Implementar validação de valor mínimo no backend
 - Melhorar feedback visual de erros
 
-# 🧪 Testes
+## 🧪 Testes
 
 - Adicionar testes de API (integração)
 - Implementar fixtures para dados fixos
 - Criar testes de performance básicos
 - Integrar com CI/CD (GitHub Actions)
 
-# 🏗️ Arquitetura
+## 🏗️ Arquitetura
 - Separar testes por domínio (ex: pedidos, produtos, pessoas)
 - Criar camada de services para API (futuro)
 - Melhorar reutilização de comandos customizados
 
-# 👨‍💻 Autor
+## 👨‍💻 Autor
 
-Emerson Teixeira Souza Santos
+## Emerson Teixeira Souza Santos
 
 Projeto desenvolvido com foco em:
 
