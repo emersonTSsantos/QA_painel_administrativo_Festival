@@ -8,7 +8,7 @@ describe('Filtro de Pedidos', () => {
         cy.login()
     })
 
-    it('Deve filtrar pedidos por nome do cliente', () => {
+    it('Dado que informo o nome do cliente, Então deve filtrar pedidos corretamente', () => {
 
         FiltroPage.preencherNomeCliente('Bruno Santos')
         FiltroPage.buscar()
@@ -16,7 +16,7 @@ describe('Filtro de Pedidos', () => {
         FiltroPage.validarResultado('Bruno Santos')
     })
 
-    it('Deve filtrar pedidos por intervalo de datas', () => {
+    it('Dado que informo um intervalo de datas, Então deve filtrar pedidos corretamente', () => {
 
         FiltroPage.preencherDataInicio('2025-02-01')
         FiltroPage.preencherDataFim('2025-02-15')
@@ -25,7 +25,7 @@ describe('Filtro de Pedidos', () => {
         FiltroPage.validarListaVisivel()
     })
 
-    it('Deve filtrar pedidos por valor mínimo', () => {
+    it('Dado que informo um valor mínimo, Então deve filtrar pedidos corretamente', () => {
 
         FiltroPage.preencherValorMinimo('100')
         FiltroPage.buscar()
@@ -33,7 +33,7 @@ describe('Filtro de Pedidos', () => {
         FiltroPage.validarListaVisivel()
     })
 
-    it('Deve combinar filtros (data + nome + valor)', () => {
+    it('Dado que combino filtros de data, nome e valor, Então deve retornar resultados compatíveis', () => {
         
         FiltroPage.preencherDataInicio('2025-02-01')
         FiltroPage.preencherDataFim('2025-02-15')
@@ -45,7 +45,7 @@ describe('Filtro de Pedidos', () => {
         FiltroPage.validarResultado('Bruno Santos')
     })
 
-    it('Deve limpar filtros corretamente', () => {
+    it('Dado que aplico filtros e limpo a busca, Então deve resetar os campos e exibir todos os pedidos', () => {
 
         FiltroPage.preencherDataInicio('2025-02-01')
         FiltroPage.preencherDataFim('2025-02-15')

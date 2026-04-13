@@ -42,11 +42,7 @@ describe('Pedidos', () => {
         cy.login()
     })
 
-    // ========================
-    // 🛒 PEDIDOS
-    // ========================
-
-    it('Deve realizar pedido com sucesso (fluxo E2E)', () => {
+    it('Dado que cadastro cliente e adiciono produto, Então deve realizar pedido com sucesso', () => {
         const pessoa = gerarPessoa()
 
         PedidoPage.abrirNovoPedido()
@@ -65,7 +61,7 @@ describe('Pedidos', () => {
         cy.get('.order-card__id').should('be.visible')
     })
 
-    it('Não deve permitir pedido sem cliente', () => {
+    it('Dado que não seleciono cliente, Então não deve permitir realizar pedido', () => {
 
         PedidoPage.abrirNovoPedido()
 
@@ -76,7 +72,7 @@ describe('Pedidos', () => {
         cy.get('#new-order-cliente').should('be.visible')
     })
 
-    it('Não deve permitir pedido sem produto', () => {
+    it('Dado que não adiciono produto, Então não deve permitir realizar pedido', () => {
         const pessoa = gerarPessoa()
 
         PedidoPage.abrirNovoPedido()
@@ -92,7 +88,7 @@ describe('Pedidos', () => {
         cy.get('#new-order-item-select').should('exist')
     })
 
-    it('Permite realizar pedido com valor menor que R$ 5 (BUG)', () => {
+    it('Dado que cadastro produto com valor menor que R$ 5, permite realizar pedido (BUG)', () => {
         const produto = {
             nome: faker.commerce.productName(),
             descricao: faker.commerce.productDescription(),
@@ -134,7 +130,7 @@ describe('Pedidos', () => {
         cy.get('.order-card__id').should('be.visible')
     })
 
-    it.skip('Não deveria permitir pedido com valor menor que R$ 5 (REGRA)', () => {
+    it.skip('Dado que o valor mínimo do pedido é R$ 5, não deveria permitir realizar pedido com valor inferior (REGRA)', () => {
         expect(true).to.equal(false)
     })
 })

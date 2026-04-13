@@ -17,7 +17,7 @@ describe('Cadastro de Produto', () => {
         ProdutoPage.acessarProdutos()
     })
 
-    it('Deve cadastrar produto com sucesso', () => {
+    it('Dado que preencho todos os campos, Então deve cadastrar produto com sucesso', () => {
         const produto = gerarProduto()
 
         ProdutoPage.preencherNome(produto.nome)
@@ -28,7 +28,7 @@ describe('Cadastro de Produto', () => {
         ProdutoPage.validarProdutoNaLista(produto.nome)
     })
 
-    it('Não deve cadastrar produto sem nome', () => {
+    it('Dado que não informo o nome, Então não deve cadastrar produto', () => {
         const produto = gerarProduto()
 
         ProdutoPage.preencherDescricao(produto.descricao)
@@ -38,19 +38,17 @@ describe('Cadastro de Produto', () => {
         cy.get('[name="nome"]').should('exist')
     })
 
-    it('Permite cadastrar produto sem descrição (BUG)', () => {
+    it('Dado que não informo a descrição, permite cadastrar produto (BUG)', () => {
         const produto = gerarProduto()
 
         ProdutoPage.preencherNome(produto.nome)
-        // NÃO preenche descrição
         ProdutoPage.preencherValor(produto.valor)
         ProdutoPage.salvarProduto()
 
-        // valida que cadastrou mesmo errado
         ProdutoPage.validarProdutoNaLista(produto.nome)
     })
 
-    it.skip('Não deveria permitir cadastro sem descrição (REGRA DE NEGÓCIO)', () => {
+    it.skip('Dado que não informo a descrição, não deveria permitir cadastro (REGRA DE NEGÓCIO)', () => {
         const produto = gerarProduto()
 
         ProdutoPage.preencherNome(produto.nome)
@@ -60,7 +58,7 @@ describe('Cadastro de Produto', () => {
         ProdutoPage.validarQueNaoCadastrou(produto.nome)
     })
 
-    it.only('Não deve cadastrar produto sem valor', () => {
+    it('Dado que não informo o valor,   Então não deve cadastrar produto', () => {
         const produto = gerarProduto()
 
         ProdutoPage.preencherNome(produto.nome)
@@ -70,7 +68,7 @@ describe('Cadastro de Produto', () => {
         cy.get('[name="valorUnitario"]').should('exist')
     })
 
-    it('Permite cadastrar produto com valor zerado (BUG)', () => {
+    it('Dado que informo valor zero, Então permite cadastrar produto (BUG)', () => {
         const produto = gerarProduto()
 
         ProdutoPage.preencherNome(produto.nome)
@@ -78,11 +76,10 @@ describe('Cadastro de Produto', () => {
         ProdutoPage.preencherValor(0)
         ProdutoPage.salvarProduto()
 
-        // valida que cadastrou mesmo errado
         ProdutoPage.validarProdutoNaLista(produto.nome)
     })
 
-    it.skip('Não deveria permitir cadastro com valor zerado (REGRA DE NEGÓCIO)', () => {
+    it.skip('Dado que informo valor zero, não deveria permitir cadastro (REGRA DE NEGÓCIO)', () => {
         const produto = gerarProduto()
 
         ProdutoPage.preencherNome(produto.nome)
@@ -93,7 +90,7 @@ describe('Cadastro de Produto', () => {
         ProdutoPage.validarQueNaoCadastrou(produto.nome)
     })
 
-    it('Não deve cadastrar produto com valor negativo', () => {
+    it('Dado que informo valor negativo, Então não deve cadastrar produto', () => {
         const produto = gerarProduto()
 
         ProdutoPage.preencherNome(produto.nome)

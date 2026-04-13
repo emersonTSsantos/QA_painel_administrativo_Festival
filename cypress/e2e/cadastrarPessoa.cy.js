@@ -3,7 +3,7 @@
 import PessoaPage from '../pages/PessoaPage'
 import { faker } from '@faker-js/faker'
 
-describe('Validar Pessoas cadastradas para realizar pedidos ', () => {
+describe('Funcionalidade: Cadastro de Pessoas para realização de pedidos', () => {
 
     const gerarPessoa = () => ({
         nome: faker.person.fullName(),
@@ -15,7 +15,7 @@ describe('Validar Pessoas cadastradas para realizar pedidos ', () => {
         cy.login()
     })
 
-    it('Deve cadastrar cliente com sucesso e aparecer no seletor', () => {
+    it('Dado que estou criando um novo cliente, quando informo todos os dados válidos, então o cliente deve ser cadastrado e aparecer no seletor', () => {
         const pessoa = gerarPessoa()
 
         PessoaPage.abrirModalNovoPedido()
@@ -28,7 +28,7 @@ describe('Validar Pessoas cadastradas para realizar pedidos ', () => {
         PessoaPage.validarClienteNoSelect(pessoa.nome)
     })
 
-    it('Não deve cadastrar cliente sem Nome', () => {
+    it('Dado que estou criando um novo cliente, quando não informo o nome, então o cliente não deve ser cadastrado', () => {
         const pessoa = gerarPessoa()
 
         PessoaPage.abrirModalNovoPedido()
@@ -41,10 +41,10 @@ describe('Validar Pessoas cadastradas para realizar pedidos ', () => {
         cy.get('#nc-nome').should('exist')
 
         cy.get('#new-order-cliente')
-        .should('not.contain', pessoa.nome)
+            .should('not.contain', pessoa.nome)
     })
 
-    it('Não deve cadastrar cliente sem E-mail', () => {
+    it('Dado que estou criando um novo cliente, quando não informo o e-mail, então o cliente não deve ser cadastrado', () => {
         const pessoa = gerarPessoa()
 
         PessoaPage.abrirModalNovoPedido()
@@ -57,10 +57,10 @@ describe('Validar Pessoas cadastradas para realizar pedidos ', () => {
         cy.get('#nc-nome').should('exist')
 
         cy.get('#new-order-cliente')
-        .should('not.contain', pessoa.nome)
+            .should('not.contain', pessoa.nome)
     })
 
-    it('Permite cadastrar cliente sem telefone (BUG)', () => {
+    it('Dado que estou criando um novo cliente, quando não informo o telefone, então o sistema permite o cadastro (BUG)', () => {
         const pessoa = gerarPessoa()
 
         PessoaPage.abrirModalNovoPedido()
@@ -74,7 +74,7 @@ describe('Validar Pessoas cadastradas para realizar pedidos ', () => {
         PessoaPage.validarClienteNoSelect(pessoa.nome)
     })
 
-    it.skip('Não deveria permitir cadastro sem telefone (REGRA DE NEGÓCIO)', () => {
+    it.skip('Dado que o telefone é obrigatório, quando não informo o telefone, então o sistema não deveria permitir o cadastro (REGRA DE NEGÓCIO)', () => {
         const pessoa = gerarPessoa()
 
         PessoaPage.abrirModalNovoPedido()
@@ -89,6 +89,5 @@ describe('Validar Pessoas cadastradas para realizar pedidos ', () => {
         cy.get('#new-order-cliente')
             .should('not.contain', pessoa.telefone)
     })
-
 
 })
