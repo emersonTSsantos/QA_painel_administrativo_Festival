@@ -68,7 +68,7 @@ Uso do Faker para:
 - Garantir independência dos testes
 
 ### ✔️ Testes E2E + Regras de Negócio
-Cobertura não só funcional, mas também de regras críticas do sistema
+Cobertura não só funcional, mas também de regras críticas do sistema, Formato BDD
 
 ---
 

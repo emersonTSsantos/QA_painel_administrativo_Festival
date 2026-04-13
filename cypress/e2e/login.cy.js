@@ -2,7 +2,7 @@
 
 import LoginPage from '../pages/LoginPage'
 
-describe('Login', () => {
+describe('Funcionalidade: Login', () => {
 
   const user = {
     valido: {
@@ -16,27 +16,27 @@ describe('Login', () => {
     }
   }
 
-  it('Deve realizar login com sucesso', () => {
+  it('Dado que estou na tela de login, quando informo credenciais válidas, então devo realizar login com sucesso', () => {
     LoginPage.login(user.valido.email, user.valido.senha)
     LoginPage.validarSucesso()
   })
 
-  it('Não deve logar com email inválido', () => {
+  it('Dado que estou na tela de login, quando informo um email inválido, então não devo conseguir logar', () => {
     LoginPage.login(user.invalido.email, user.valido.senha)
     LoginPage.validarErro()
   })
 
-  it('Não deve logar com senha inválida', () => {
+  it('Dado que estou na tela de login, quando informo uma senha inválida, então não devo conseguir logar', () => {
     LoginPage.login(user.valido.email, user.invalido.senha)
     LoginPage.validarErro()
   })
 
-  it('Não deve logar com email e senha inválidos', () => {
+  it('Dado que estou na tela de login, quando informo email e senha inválidos, então não devo conseguir logar', () => {
     LoginPage.login(user.invalido.email, user.invalido.senha)
     LoginPage.validarErro()
   })
 
-  it.only('Não deve logar com email em formato inválido', () => {
+  it('Dado que estou na tela de login, quando informo um email em formato inválido, então o sistema deve exibir validação de campo', () => { 
     LoginPage.acessar()
 
     LoginPage.preencherEmail('email-invalido')
@@ -44,14 +44,12 @@ describe('Login', () => {
 
     LoginPage.submeter()
 
-    // 🔍 valida que o campo está inválido (HTML5)
     cy.get('#email:invalid').should('exist')
 
     cy.get('#email')
       .then($input => {
         expect($input[0].validationMessage).to.not.be.empty
       })
-
   })
 
 })
