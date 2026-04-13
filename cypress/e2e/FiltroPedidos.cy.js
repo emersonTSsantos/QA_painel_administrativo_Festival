@@ -37,12 +37,12 @@ describe('Funcionalidade: Filtro de Pedidos', () => {
         
         FiltroPage.preencherDataInicio('2025-02-01')
         FiltroPage.preencherDataFim('2025-02-15')
-        FiltroPage.preencherNomeCliente('Bruno Santos')
-        FiltroPage.preencherValorMinimo('100')
+        FiltroPage.preencherNomeCliente('Diego Costa')
+        FiltroPage.preencherValorMinimo('10')
 
         FiltroPage.buscar()
 
-        FiltroPage.validarResultado('Bruno Santos')
+        FiltroPage.validarResultado('Diego Costa')
     })
 
     it('Dado que aplico filtros e limpo a busca, e clico em Limpar, Então deve resetar os campos e exibir todos os pedidos', () => {
