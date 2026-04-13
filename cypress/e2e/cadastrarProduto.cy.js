@@ -3,7 +3,7 @@
 import ProdutoPage from '../pages/ProdutoPage'
 import { faker } from '@faker-js/faker'
 
-describe('Cadastro de Produto', () => {
+describe('Funcionalidade: Cadastro de Produto', () => {
 
     const gerarProduto = () => ({
         nome: faker.commerce.productName(),
@@ -17,7 +17,7 @@ describe('Cadastro de Produto', () => {
         ProdutoPage.acessarProdutos()
     })
 
-    it('Dado que preencho todos os campos, Então deve cadastrar produto com sucesso', () => {
+    it('Dado que preencho todos os campos, e clico em Cadastrar, Então deve cadastrar produto com sucesso', () => {
         const produto = gerarProduto()
 
         ProdutoPage.preencherNome(produto.nome)
@@ -28,7 +28,7 @@ describe('Cadastro de Produto', () => {
         ProdutoPage.validarProdutoNaLista(produto.nome)
     })
 
-    it('Dado que não informo o nome, Então não deve cadastrar produto', () => {
+    it('Dado que não informo o nome, e clico em Cadastrar, Então não deve cadastrar produto', () => {
         const produto = gerarProduto()
 
         ProdutoPage.preencherDescricao(produto.descricao)
@@ -38,7 +38,7 @@ describe('Cadastro de Produto', () => {
         cy.get('[name="nome"]').should('exist')
     })
 
-    it('Dado que não informo a descrição, permite cadastrar produto (BUG)', () => {
+    it('Dado que não informo a descrição, e clico em Cadastrar, permite cadastrar produto (BUG)', () => {
         const produto = gerarProduto()
 
         ProdutoPage.preencherNome(produto.nome)
@@ -58,7 +58,7 @@ describe('Cadastro de Produto', () => {
         ProdutoPage.validarQueNaoCadastrou(produto.nome)
     })
 
-    it('Dado que não informo o valor,   Então não deve cadastrar produto', () => {
+    it('Dado que não informo o valor, e clico em Cadastrar, Então não deve cadastrar produto', () => {
         const produto = gerarProduto()
 
         ProdutoPage.preencherNome(produto.nome)
@@ -68,7 +68,7 @@ describe('Cadastro de Produto', () => {
         cy.get('[name="valorUnitario"]').should('exist')
     })
 
-    it('Dado que informo valor zero, Então permite cadastrar produto (BUG)', () => {
+    it('Dado que informo valor zero, e clico em Cadastrar, Então permite cadastrar produto (BUG)', () => {
         const produto = gerarProduto()
 
         ProdutoPage.preencherNome(produto.nome)
@@ -90,7 +90,7 @@ describe('Cadastro de Produto', () => {
         ProdutoPage.validarQueNaoCadastrou(produto.nome)
     })
 
-    it('Dado que informo valor negativo, Então não deve cadastrar produto', () => {
+    it('Dado que informo valor negativo, e clico em Cadastrar, Então não deve cadastrar produto', () => {
         const produto = gerarProduto()
 
         ProdutoPage.preencherNome(produto.nome)

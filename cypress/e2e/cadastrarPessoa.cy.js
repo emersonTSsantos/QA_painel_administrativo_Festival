@@ -15,7 +15,7 @@ describe('Funcionalidade: Cadastro de Pessoas para realização de pedidos', () 
         cy.login()
     })
 
-    it('Dado que estou criando um novo cliente, quando informo todos os dados válidos, então o cliente deve ser cadastrado e aparecer no seletor', () => {
+    it('Dado que estou criando um novo cliente, quando informo todos os dados válidos, e clico em salvar cliente, então o cliente deve ser cadastrado e aparecer no seletor', () => {
         const pessoa = gerarPessoa()
 
         PessoaPage.abrirModalNovoPedido()
@@ -28,7 +28,7 @@ describe('Funcionalidade: Cadastro de Pessoas para realização de pedidos', () 
         PessoaPage.validarClienteNoSelect(pessoa.nome)
     })
 
-    it('Dado que estou criando um novo cliente, quando não informo o nome, então o cliente não deve ser cadastrado', () => {
+    it('Dado que estou criando um novo cliente, quando não informo o nome, e clico em salvar cliente, então o cliente não deve ser cadastrado', () => {
         const pessoa = gerarPessoa()
 
         PessoaPage.abrirModalNovoPedido()
@@ -44,7 +44,7 @@ describe('Funcionalidade: Cadastro de Pessoas para realização de pedidos', () 
             .should('not.contain', pessoa.nome)
     })
 
-    it('Dado que estou criando um novo cliente, quando não informo o e-mail, então o cliente não deve ser cadastrado', () => {
+    it('Dado que estou criando um novo cliente, quando não informo o e-mail, e clico em salvar cliente, então o cliente não deve ser cadastrado', () => {
         const pessoa = gerarPessoa()
 
         PessoaPage.abrirModalNovoPedido()
@@ -60,7 +60,7 @@ describe('Funcionalidade: Cadastro de Pessoas para realização de pedidos', () 
             .should('not.contain', pessoa.nome)
     })
 
-    it('Dado que estou criando um novo cliente, quando não informo o telefone, então o sistema permite o cadastro (BUG)', () => {
+    it('Dado que estou criando um novo cliente, quando não informo o telefone, e clico em salvar cliente, então o sistema permite o cadastro (BUG)', () => {
         const pessoa = gerarPessoa()
 
         PessoaPage.abrirModalNovoPedido()
@@ -74,7 +74,7 @@ describe('Funcionalidade: Cadastro de Pessoas para realização de pedidos', () 
         PessoaPage.validarClienteNoSelect(pessoa.nome)
     })
 
-    it.skip('Dado que o telefone é obrigatório, quando não informo o telefone, então o sistema não deveria permitir o cadastro (REGRA DE NEGÓCIO)', () => {
+    it.skip('Dado que o telefone é obrigatório, quando não informo o telefone, e clico em salvar cliente, então o sistema não deveria permitir o cadastro (REGRA DE NEGÓCIO)', () => {
         const pessoa = gerarPessoa()
 
         PessoaPage.abrirModalNovoPedido()

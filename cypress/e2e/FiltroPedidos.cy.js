@@ -2,13 +2,13 @@
 
 import FiltroPage from '../pages/FiltroPage'
 
-describe('Filtro de Pedidos', () => {
+describe('Funcionalidade: Filtro de Pedidos', () => {
 
     beforeEach(() => {
         cy.login()
     })
 
-    it('Dado que informo o nome do cliente, Então deve filtrar pedidos corretamente', () => {
+    it('Dado que informo o nome do cliente, e clico em Realizar busca, Então deve filtrar pedidos corretamente', () => {
 
         FiltroPage.preencherNomeCliente('Bruno Santos')
         FiltroPage.buscar()
@@ -16,7 +16,7 @@ describe('Filtro de Pedidos', () => {
         FiltroPage.validarResultado('Bruno Santos')
     })
 
-    it('Dado que informo um intervalo de datas, Então deve filtrar pedidos corretamente', () => {
+    it('Dado que informo um intervalo de datas, e clico em Realizar busca, Então deve filtrar pedidos corretamente', () => {
 
         FiltroPage.preencherDataInicio('2025-02-01')
         FiltroPage.preencherDataFim('2025-02-15')
@@ -25,7 +25,7 @@ describe('Filtro de Pedidos', () => {
         FiltroPage.validarListaVisivel()
     })
 
-    it('Dado que informo um valor mínimo, Então deve filtrar pedidos corretamente', () => {
+    it('Dado que informo um valor mínimo, e clico em Realizar busca, Então deve filtrar pedidos corretamente', () => {
 
         FiltroPage.preencherValorMinimo('100')
         FiltroPage.buscar()
@@ -33,7 +33,7 @@ describe('Filtro de Pedidos', () => {
         FiltroPage.validarListaVisivel()
     })
 
-    it('Dado que combino filtros de data, nome e valor, Então deve retornar resultados compatíveis', () => {
+    it('Dado que combino filtros de data, nome e valor, e clico em Realizar busca, Então deve retornar resultados compatíveis', () => {
         
         FiltroPage.preencherDataInicio('2025-02-01')
         FiltroPage.preencherDataFim('2025-02-15')
@@ -45,7 +45,7 @@ describe('Filtro de Pedidos', () => {
         FiltroPage.validarResultado('Bruno Santos')
     })
 
-    it('Dado que aplico filtros e limpo a busca, Então deve resetar os campos e exibir todos os pedidos', () => {
+    it('Dado que aplico filtros e limpo a busca, e clico em Limpar, Então deve resetar os campos e exibir todos os pedidos', () => {
 
         FiltroPage.preencherDataInicio('2025-02-01')
         FiltroPage.preencherDataFim('2025-02-15')

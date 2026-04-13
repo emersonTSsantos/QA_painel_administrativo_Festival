@@ -16,27 +16,27 @@ describe('Funcionalidade: Login', () => {
     }
   }
 
-  it('Dado que estou na tela de login, quando informo credenciais válidas, então devo realizar login com sucesso', () => {
+  it('Dado que estou na tela de login, quando informo credenciais válidas, e clico em Entrar, então devo realizar login com sucesso', () => {
     LoginPage.login(user.valido.email, user.valido.senha)
     LoginPage.validarSucesso()
   })
 
-  it('Dado que estou na tela de login, quando informo um email inválido, então não devo conseguir logar', () => {
+  it('Dado que estou na tela de login, quando informo um email inválido, e clico em Entrar, então não devo conseguir logar', () => {
     LoginPage.login(user.invalido.email, user.valido.senha)
     LoginPage.validarErro()
   })
 
-  it('Dado que estou na tela de login, quando informo uma senha inválida, então não devo conseguir logar', () => {
+  it('Dado que estou na tela de login, quando informo uma senha inválida, e clico em Entrar, então não devo conseguir logar', () => {
     LoginPage.login(user.valido.email, user.invalido.senha)
     LoginPage.validarErro()
   })
 
-  it('Dado que estou na tela de login, quando informo email e senha inválidos, então não devo conseguir logar', () => {
+  it('Dado que estou na tela de login, quando informo email e senha inválidos, e clico em Entrar, então não devo conseguir logar', () => {
     LoginPage.login(user.invalido.email, user.invalido.senha)
     LoginPage.validarErro()
   })
 
-  it('Dado que estou na tela de login, quando informo um email em formato inválido, então o sistema deve exibir validação de campo', () => { 
+  it('Dado que estou na tela de login, quando informo um email em formato inválido, e clico em Entrar, então o sistema deve exibir validação de campo', () => { 
     LoginPage.acessar()
 
     LoginPage.preencherEmail('email-invalido')

@@ -5,7 +5,7 @@ import PessoaPage from '../pages/PessoaPage'
 import ProdutoPage from '../pages/ProdutoPage'
 import { faker } from '@faker-js/faker'
 
-describe('Pedidos', () => {
+describe('Funcionalidade: Registro de Pedidos', () => {
 
     const gerarPessoa = () => ({
         nome: faker.person.firstName(),
@@ -42,7 +42,7 @@ describe('Pedidos', () => {
         cy.login()
     })
 
-    it('Dado que cadastro cliente e adiciono produto, Então deve realizar pedido com sucesso', () => {
+    it('Dado que cadastro cliente e adiciono produto, e clico em Confirmar Pedido, Então deve realizar pedido com sucesso', () => {
         const pessoa = gerarPessoa()
 
         PedidoPage.abrirNovoPedido()
@@ -61,7 +61,7 @@ describe('Pedidos', () => {
         cy.get('.order-card__id').should('be.visible')
     })
 
-    it('Dado que não seleciono cliente, Então não deve permitir realizar pedido', () => {
+    it('Dado que não seleciono cliente, e clico em Confirmar Pedido, Então não deve permitir realizar pedido', () => {
 
         PedidoPage.abrirNovoPedido()
 
@@ -72,7 +72,7 @@ describe('Pedidos', () => {
         cy.get('#new-order-cliente').should('be.visible')
     })
 
-    it('Dado que não adiciono produto, Então não deve permitir realizar pedido', () => {
+    it('Dado que não adiciono produto, e clico em Confirmar Pedido, Então não deve permitir realizar pedido', () => {
         const pessoa = gerarPessoa()
 
         PedidoPage.abrirNovoPedido()
@@ -88,7 +88,7 @@ describe('Pedidos', () => {
         cy.get('#new-order-item-select').should('exist')
     })
 
-    it('Dado que cadastro produto com valor menor que R$ 5, permite realizar pedido (BUG)', () => {
+    it('Dado que cadastro produto com valor menor que R$ 5, e clico em Confirmar Pedido, então não deve permitir realizar pedido (BUG)', () => {
         const produto = {
             nome: faker.commerce.productName(),
             descricao: faker.commerce.productDescription(),
