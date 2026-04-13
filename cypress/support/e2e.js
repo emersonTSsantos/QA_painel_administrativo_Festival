@@ -17,7 +17,16 @@
 import './commands'
 
 afterEach(function () {
+  const testName = this.currentTest.title
+  .replace(/[^a-zA-Z0-9 ]/g, '') 
+  .replace(/\s+/g, '-')
+  .substring(0, 50)
+
+  if (this.currentTest.state === 'passed') {
+    cy.screenshot(`SUCESSO-${testName}`)
+  }
+
   if (this.currentTest.state === 'failed') {
-    cy.screenshot(`erro-${this.currentTest.title}`)
+    cy.screenshot(`ERRO-${testName}`)
   }
 })
